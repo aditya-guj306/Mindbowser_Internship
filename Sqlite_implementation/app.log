@@ -304,3 +304,20 @@ INFO:werkzeug:2024-02-24 23:25:38,343:127.0.0.1 - - [24/Feb/2024 23:25:38] "PATC
 INFO:werkzeug:2024-02-24 23:25:52,704:127.0.0.1 - - [24/Feb/2024 23:25:52] "GET /user HTTP/1.1" 200 -
 INFO:werkzeug:2024-02-24 23:26:23,760:127.0.0.1 - - [24/Feb/2024 23:26:23] "DELETE /user/2 HTTP/1.1" 200 -
 INFO:werkzeug:2024-02-24 23:26:29,013:127.0.0.1 - - [24/Feb/2024 23:26:29] "GET /user HTTP/1.1" 200 -
+INFO:werkzeug:2024-02-26 12:57:12,361:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+INFO:werkzeug:2024-02-26 12:57:12,361:[33mPress CTRL+C to quit[0m
+INFO:werkzeug:2024-02-26 12:57:12,365: * Restarting with stat
+WARNING:werkzeug:2024-02-26 12:57:12,666: * Debugger is active!
+INFO:werkzeug:2024-02-26 12:57:12,671: * Debugger PIN: 568-099-876
+INFO:werkzeug:2024-02-26 12:57:50,734:127.0.0.1 - - [26/Feb/2024 12:57:50] "GET /user HTTP/1.1" 200 -
+INFO:werkzeug:2024-02-26 13:00:12,729:127.0.0.1 - - [26/Feb/2024 13:00:12] "[31m[1mPOST /user/2 HTTP/1.1[0m" 415 -
+INFO:werkzeug:2024-02-26 13:01:03,330:127.0.0.1 - - [26/Feb/2024 13:01:03] "[31m[1mPOST /user/2 HTTP/1.1[0m" 415 -
+INFO:werkzeug:2024-02-26 13:01:47,430:127.0.0.1 - - [26/Feb/2024 13:01:47] "[31m[1mPOST /user/2 HTTP/1.1[0m" 415 -
+INFO:werkzeug:2024-02-26 13:02:08,750:127.0.0.1 - - [26/Feb/2024 13:02:08] "[31m[1mPOST /user/2 HTTP/1.1[0m" 415 -
+INFO:werkzeug:2024-02-26 13:02:26,147:127.0.0.1 - - [26/Feb/2024 13:02:26] "[33mPOST /user/2 HTTP/1.1[0m" 404 -
+INFO:werkzeug:2024-02-26 13:03:03,073:127.0.0.1 - - [26/Feb/2024 13:03:03] "GET /user HTTP/1.1" 200 -
+INFO:werkzeug:2024-02-26 13:10:29,756: * Detected change in 'c:\\Users\\adity\\OneDrive\\Desktop\\project\\app3.py', reloading
+INFO:werkzeug:2024-02-26 13:10:29,782: * Restarting with stat
+WARNING:werkzeug:2024-02-26 13:10:30,075: * Debugger is active!
+INFO:werkzeug:2024-02-26 13:10:30,079: * Debugger PIN: 568-099-876
