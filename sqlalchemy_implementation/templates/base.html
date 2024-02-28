@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %} {% endblock %} - FlaskApp</title>
+    <style>
+        .title {
+            margin: 5px;
+        }
+
+        .content {
+            margin: 5px;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
+
+        .student {
+            flex: 20%;
+            padding: 10px;
+            margin: 5px;
+            background-color: rgb(225, 222, 222);
+            inline-size: 100%;
+        }
+
+        .bio {
+            padding: 10px;
+            margin: 5px;
+            background-color: rgb(225, 222, 222);
+            color: #004835;
+        }
+
+        .name a {
+            color: #17b48d;
+            text-decoration: none;
+        }
+
+        nav a {
+            color: #d13a5b;
+            font-size: 3em;
+            margin-left: 50px;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="{{ url_for('index') }}">FlaskApp</a>
+        <a href="{{ url_for('create') }}">Create</a>
+        <a href="#">About</a>
+    </nav>
+    <hr>
+    <div class="content">
+        {% block content %} {% endblock %}
+    </div>
+</body>
+</html>
