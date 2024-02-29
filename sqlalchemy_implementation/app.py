@@ -1,13 +1,13 @@
 from flask import Flask ,render_template,request,redirect,url_for
 from flask_sqlalchemy import SQLAlchemy 
 from sqlalchemy.sql import func
+import os
 
 
-
-
-db = SQLAlchemy()
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///C:\\Users\\adity\\OneDrive\\Desktop\\Mindbowser_Intern\\app.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:adi1202@localhost/app'
+app.config['SQLALCHEMY_TRACK_MODIFICATION']=False
+db = SQLAlchemy()
 db.init_app(app)
 
 class Student(db.Model):
@@ -18,13 +18,34 @@ class Student(db.Model):
     age = db.Column(db.Integer)
     created_at = db.Column(db.DateTime(timezone=True),server_default=func.now())
     bio = db.Column(db.Text)
+
+class Post(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(100))
+    content = db.Column(db.Text)
+    comments = db.relationship('Comment',backref='post')
+
+    def __repr__(self):
+        return f'<Post "(self.title)">'
+    
+class Comment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    content = db.Column(db.Text)
+    post_id = db.Column(db.Integer, db.ForeignKey('post.id'))  
+
+    def __repr__(self):
+        return f'<Comment "{self.content[:20]}...">'  
 with app.app_context():
     db.create_all()
+    
 
 @app.route('/')
 def index():
     students = Student.query.all()
-    return render_template('index.html', students=students)        
+    posts = Post.query.all()
+    return render_template('index.html', students=students,posts=posts)    
+
+      
 
 @app.route('/<int:student_id>/')
 def student(student_id):
@@ -80,6 +101,31 @@ def delete(student_id):
     db.session.delete(student)
     db.session.commit()
     return redirect(url_for('index'))
+
+@app.route('/post/<int:post_id>/', methods=('GET', 'POST'))
+def post(post_id):
+    post = Post.query.get_or_404(post_id)
+    if request.method == 'POST':
+        comment = Comment(content=request.form['content'],post=post)
+        db.session.add(comment)
+        db.session.commit()
+        return redirect(url_for('post',post_id=post.id))
+    
+    return render_template('post.html',post=post)
+@app.route('/comments/')
+def comments():
+    comments=Comment.query.order_by(Comment.id.desc()).all()
+    return render_template('comment.html',comments=comments)
+
+@app.post('/comments/<int:comment_id>/delete')
+def delete_comment(comment_id):
+    comment = Comment.query.get_or_404(comment_id)
+    post_id = comment.post.id
+    db.session.delete(comment)
+    db.session.commit()
+    return redirect(url_for('post',post_id=post_id))
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)

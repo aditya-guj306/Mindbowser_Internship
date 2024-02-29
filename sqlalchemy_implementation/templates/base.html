@@ -14,13 +14,37 @@
             display: flex;
             flex-direction: row;
             flex-wrap: wrap;
+            
+            
+        }
+        .feed {
+            margin: 5px;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            
+            
         }
 
         .student {
-            flex: 20%;
+            flex: 30%;
             padding: 10px;
             margin: 5px;
             background-color: rgb(225, 222, 222);
+            max-inline-size: 450px;
+        }
+        .comment {
+            padding: 10px;
+            margin: 10px;
+            background-color: #fff;
+        }
+
+        .post {
+            flex: 20%;
+            padding: 10px;
+            margin: 5px;
+            background-color: #f3f3f3;
             inline-size: 100%;
         }
 
@@ -47,12 +71,15 @@
 <body>
     <nav>
         <a href="{{ url_for('index') }}">FlaskApp</a>
-        <a href="{{ url_for('create') }}">Create</a>
+        <a href="{{ url_for('create') }}">Create</a> 
+        <a href="#">Post</a>
+        <a href="{{ url_for('comments') }}">Comments</a>
         <a href="#">About</a>
     </nav>
     <hr>
     <div class="content">
         {% block content %} {% endblock %}
     </div>
+    
 </body>
 </html>
