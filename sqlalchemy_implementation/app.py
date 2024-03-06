@@ -1,7 +1,7 @@
 from flask import Flask ,render_template,request,redirect,url_for
 from flask_sqlalchemy import SQLAlchemy 
 from sqlalchemy.sql import func
-import os,re
+import os
 
 
 app = Flask(__name__)
@@ -9,6 +9,11 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:adi1202@localhost/app'
 app.config['SQLALCHEMY_TRACK_MODIFICATION']=False
 db = SQLAlchemy()
 db.init_app(app)
+
+post_tag = db.Table('post_tag',
+                    db.Column('post_id', db.Integer, db.ForeignKey('post.id')),
+                    db.Column('tag_id', db.Integer, db.ForeignKey('tag.id'))
+                    )
 
 class Student(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -19,12 +24,19 @@ class Student(db.Model):
     created_at = db.Column(db.DateTime(timezone=True),server_default=func.now())
     bio = db.Column(db.Text)
 
+class Tag(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(50))
+
+    def __repr__(self):
+        return f'<Tag "{self.name}">' 
+
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100))
     content = db.Column(db.Text)
     comments = db.relationship('Comment',backref='post')
-
+    tags = db.relationship('Tag', secondary=post_tag, backref='posts')
     def __repr__(self):
         return f'<Post "(self.title)">'
     
@@ -125,6 +137,10 @@ def delete_comment(comment_id):
     db.session.commit()
     return redirect(url_for('post',post_id=post_id))
 
+@app.route('/tags/<tag_name>/')
+def tag(tag_name):
+    tag = Tag.query.filter_by(name=tag_name).first_or_404()
+    return render_template('tag.html', tag=tag)
 
 
 if __name__ == '__main__':
