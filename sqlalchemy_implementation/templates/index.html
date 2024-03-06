@@ -1,3 +1,4 @@
+{% from 'macros.html' import display_tags %}
 {% extends 'base.html' %}
 
 {% block content %}
@@ -49,6 +50,7 @@
             <div class="content">
                 <p>{{post.content}}</p>
             </div>
+            {{ display_tags(post) }}
             <hr>
         
         </div>
