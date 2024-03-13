@@ -2,41 +2,40 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1 class="title">{% block title %} Students {% endblock %}</h1>
-    <div class="content">
-        {% for student in students %}
-        <div class="student">
-            <p><b>#{{ student.id }}</b></p>
-            <b>
+<h1 class="title">{% block title %} Students {% endblock %}</h1>
+<div class="content">
+    {% for student in students %}
+    <div class="student">
+        <p><b>#{{ student.id }}</b></p>
+        <b>
             <p class="name">
                 <a href="{{ url_for('student', student_id=student.id)}}">
                     {{ student.first_name }} {{ student.last_name }}
                 </a>
             </p>
-            </b>
-            <p>{{ student.email }}</p>
-            <p>{{ student.age }} years old.</p>
-            <p>Joined: {{ student.created_at }}</p>
-            <div class="bio">
-                <h4>Bio</h4>
-                <p>{{ student.bio }}</p>
-            </div>
-            <a href="{{ url_for('edit', student_id=student.id) }}">Edit</a>
-
-            <hr>
-            <form method="POST"
-                action="{{ url_for('delete', student_id=student.id) }}">
-                <input type="submit" value="Delete Student"
-                onclick="return confirm('Are you sure you want to delete this entry?')">
-            </form>
+        </b>
+        <p>{{ student.email }}</p>
+        <p>{{ student.age }} years old.</p>
+        <p>Joined: {{ student.created_at }}</p>
+        <div class="bio">
+            <h4>Bio</h4>
+            <p>{{ student.bio }}</p>
         </div>
-        {% endfor %}
-    </div>  
-         <div class="feed">
-     
-        <br></br>
-        <h1>Posts</h1>
-        <div class="feed">
+        <a href="{{ url_for('edit', student_id=student.id) }}">Edit</a>
+
+        <hr>
+        <form method="POST" action="{{ url_for('delete', student_id=student.id) }}">
+            <input type="submit" value="Delete Student"
+                onclick="return confirm('Are you sure you want to delete this entry?')">
+        </form>
+    </div>
+    {% endfor %}
+</div>
+<div class="feed">
+
+    <br></br>
+    <h1>Posts</h1>
+    <div class="feed">
         {%for post in posts %}
         <div class="post">
             <p><b>#{{post.id}}</b></p>
@@ -52,11 +51,63 @@
             </div>
             {{ display_tags(post) }}
             <hr>
-        
+
         </div>
-{% endfor %}
-</div>
+        {% endfor %}
     </div>
+</div>
+<br></br>
+
+<div class="content">
+    <h2>(Page {{ pagination.page }})</h2>
+    {% for employee in pagination.items %}
+   
+    <div class="employee">
+        <p><b>#{{ employee.id }}</b></p>
+        <b>
+            <p class="name1">{{ employee.first_name }} {{ employee.last_name }}</p>
+        </b>
+        <p>{{ employee.email }}</p>
+        <p>{{ employee.age }} years old.</p>
+        <p>Hired: {{ employee.hire_date }}</p>
+        {% if employee.active %}
+        <p><i>(Active)</i></p>
+        {% else %}
+        <p><i>(Out of Office)</i></p>
+        {% endif %}
+    </div>
+    {% endfor %}
+</div>
+<div class="pagination">
+    {% if pagination.has_prev %}
+        <span>
+            <a class='page-number' href="{{ url_for('index', page=pagination.prev_num) }}">
+                {{ '<<<' }}
+            </a>
+        </span>
+    {% endif %}
+
+    {% for number in pagination.iter_pages() %}
+        {% if pagination.page != number %}
+            <span>
+                    <a class='page-number'
+                        href="{{ url_for('index', page=number) }}">
+                    {{ number }}
+                    </a>
+            </span>
+        {% else %}
+            <span class='current-page-number'>{{ number }}</span>
+        {% endif %}
+    {% endfor %}
+
+    {% if pagination.has_next %}
+        <span>
+            <a class='page-number'
+                href="{{ url_for('index', page=pagination.next_num) }}">
+                {{ '>>>' }}
+            </a>
+        </span>
+    {% endif %}
+</div>
+
 {% endblock %}
-
-
