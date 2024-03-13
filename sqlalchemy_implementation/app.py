@@ -47,6 +47,19 @@ class Comment(db.Model):
 
     def __repr__(self):
         return f'<Comment "{self.content[:20]}...">'  
+class Employee(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    first_name = db.Column(db.String(100), nullable=False)
+    last_name = db.Column(db.String(100), nullable=False)
+    email = db.Column(db.String(100), unique=True, nullable=False)
+    age = db.Column(db.Integer, nullable=False)
+    hire_date = db.Column(db.Date, nullable=False)
+    active = db.Column(db.Boolean, nullable=False)
+
+    def __repr__(self):
+        return f'<Employee {self.first_name} {self.last_name}>'    
+
+
 with app.app_context():
     db.create_all()
     
@@ -55,7 +68,11 @@ with app.app_context():
 def index():
     students = Student.query.all()
     posts = Post.query.all()
-    return render_template('index.html', students=students,posts=posts)    
+    # employees = Employee.query.all()
+    # return render_template('index.html', students=students,posts=posts,employees=employees)
+    page = request.args.get('page', 1, type=int)
+    pagination = Employee.query.order_by(Employee.first_name).paginate(page=page, per_page=1)
+    return render_template('index.html', students=students,posts=posts,pagination=pagination)    
 
       
 

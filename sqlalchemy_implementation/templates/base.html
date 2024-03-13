@@ -17,6 +17,13 @@
             
             
         }
+        .employee {
+            flex: 20%;
+            padding: 10px;
+            margin: 5px;
+            background-color: #f3f3f3;
+            inline-size: 100%;
+        }
         .feed {
             margin: 5px;
             width: 100%;
@@ -31,7 +38,7 @@
             flex: 30%;
             padding: 10px;
             margin: 5px;
-            background-color: rgb(225, 222, 221);
+            background-color: rgb(225, 222, 222);
             max-inline-size: 450px;
         }
         .comment {
@@ -51,11 +58,15 @@
         .bio {
             padding: 10px;
             margin: 5px;
-            background-color: rgb(225, 222, 221);
+            background-color: rgb(225, 222, 222);
             color: #004835;
         }
 
         .name a {
+            color: #17b48d;
+            text-decoration: none;
+        }
+        .name1 {
             color: #17b48d;
             text-decoration: none;
         }
@@ -66,6 +77,25 @@
             margin-left: 50px;
             text-decoration: none;
         }
+        .pagination {
+            margin: 0 auto;
+        }
+
+        .pagination span {
+            font-size: 2em;
+            margin-right: 10px;
+        }
+
+        .page-number {
+            color: #d64161;
+            padding: 5px;
+            text-decoration: none;
+        }
+
+        .current-page-number {
+            color: #666
+        }
+
     </style>
 </head>
 <body>
